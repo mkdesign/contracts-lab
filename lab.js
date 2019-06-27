@@ -154,15 +154,26 @@ let WRContact =  readOnlyContract.connect(wallet)
 
 // console.log(readOnlyContract)
 
-let  depositsBalance = async () =>  {
-    console.log("Number : " + Number(await readOnlyContract.depositsBalance()))
+// let  depositsBalance = async () =>  {
+//     console.log("Number : " + Number(await readOnlyContract.depositsBalance()))
+// }
+
+// depositsBalance();
+
+let  getBalance = async () =>  {
+   let balance = Number(await WRContact.balance()) // Because Map variable is Private cannot use READ-ONLY contract.
+   console.log(balance)
 }
 
-depositsBalance();
+getBalance()
 
 let deposity = async () => {
-	let balance = await WRContact.deposit({value : utils.parseUnits('1.0', 'wei')})
-	console.log("Balance :" + balance)
+	let tx = await WRContact.deposit({value : utils.parseUnits('1', 'gwei')}) // returns tx
+	console.log(tx)
 }
 
-// deposity()
+deposity()
+
+WRContact.on("LogDepositMade", (sender, amount)=> {
+	console.log(`User : ${sender} has deposit ${amount}`);
+})

@@ -1,6 +1,6 @@
 let ethers = require('ethers')
 require('dotenv').config()
-
+let utils = ethers.utils
 let SimpleBank = require('./dist/contracts/SimpleBank.json')
 
 let simpleBankABI = SimpleBank.abiDefinition;
@@ -126,33 +126,43 @@ let simpleBankBCODE = SimpleBank.code;
 let provider = ethers.getDefaultProvider('ropsten')
 
 let privateKey = process.env.pk
-console.log(privateKey)
+// console.log(privateKey)
 
 let wallet = new ethers.Wallet(privateKey, provider)
 
-let factory = new ethers.ContractFactory(simpleBankABI,simpleBankBCODE, wallet)
+// let factory = new ethers.ContractFactory(simpleBankABI,simpleBankBCODE, wallet)
 
-async function factoryMachine() {
+// async function factoryMachine() {
     
 
-    contract = await factory.deploy();
+//     contract = await factory.deploy();
 
-    console.log("address : "+contract.address)
+//     console.log("address : "+contract.address)
 
-    // console.log(contract.deployTransaction.hash)
+//     // console.log(contract.deployTransaction.hash)
 
-    await contract.deployed();
-}
-factoryMachine()
+//     await contract.deployed();
+// }
+// factoryMachine()
 
 // const contractAddress = '0x1eb08cc9357fa1c873c4a0816621008c3f31b29a'
+const contractAddress = '0x4931A34E108381ec659271a3A7FbbE6859c4019f'
 
-// let readOnlyContract = new ethers.Contract(contractAddress, abi, provider)
+let readOnlyContract = new ethers.Contract(contractAddress, simpleBankABI, provider)
+let WRContact =  readOnlyContract.connect(wallet)
+
 
 // console.log(readOnlyContract)
 
-// let  depositsBalance = async () =>  {
-//     console.log(Number(await readOnlyContract.depositsBalance()))
-// }
+let  depositsBalance = async () =>  {
+    console.log("Number : " + Number(await readOnlyContract.depositsBalance()))
+}
 
-// depositsBalance();
+depositsBalance();
+
+let deposity = async () => {
+	let balance = await WRContact.deposit({value : utils.parseUnits('1.0', 'wei')})
+	console.log("Balance :" + balance)
+}
+
+// deposity()

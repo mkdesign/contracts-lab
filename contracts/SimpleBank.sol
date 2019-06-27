@@ -13,7 +13,7 @@ contract SimpleBank {
     // Constructor is "payable" so it can receive the initial funding of 30, 
     // required to reward the first 3 clients
     constructor() public payable {
-        require(msg.value == 30 ether, "30 ether initial funding required");
+        // require(msg.value == 30 ether, "30 ether initial funding required");
         /* Set the owner to the creator of this contract */
         owner = msg.sender;
         clientCount = 0;
@@ -23,10 +23,10 @@ contract SimpleBank {
     /// giving the first 3 of them 10 ether as reward
     /// @return The balance of the user after enrolling
     function enroll() public returns (uint) {
-        if (clientCount < 3) {
-            clientCount++;
-            balances[msg.sender] = 10 ether;
-        }
+        // if (clientCount < 3) {
+        //     clientCount++;
+        //     balances[msg.sender] = 10 ether;
+        // }
         return balances[msg.sender];
     }
 

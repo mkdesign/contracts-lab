@@ -53,9 +53,9 @@ module.exports = {
 
     contracts: {
       // example:
-      //SimpleStorage: {
-      //  args: [ 100 ]
-      //}
+      // SimpleStorage: {
+      //  value : 30000000000  
+      // }
     }
   },
 
